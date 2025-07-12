@@ -48,6 +48,13 @@ export default function DatasetCard({ dataset }: DatasetCardProps) {
     return dateMetadata?.value ? formatDate(dateMetadata.value) : formatDate(dataset.created)
   }
 
+  const createdDateFormatter = (rawDate: any) => {
+    const date = new Date(rawDate);
+    const formattedDate = date.toLocaleDateString("en-GB");
+    const finalFormat = formattedDate.replace(/\//g, "-");
+    return finalFormat;
+  }
+
   const shouldShowSeeMore = dataset.description && dataset.description.length > 150
   const displayDescription =
     shouldShowSeeMore && !showFullDescription ? dataset.description.substring(0, 150) + "..." : dataset.description
@@ -64,12 +71,12 @@ export default function DatasetCard({ dataset }: DatasetCardProps) {
       <div className="flex items-center gap-6 mb-4 text-xs text-gray-600">
         <div className="flex items-center">
           <Calendar className="h-4 w-4 mr-2 text-orange-500" />
-          <span>{getCreationDate()}</span>
+          <span>{createdDateFormatter(dataset.created)}</span>
         </div>
 
         <div className="flex items-center">
           <Download className="h-4 w-4 mr-2 text-orange-500" />
-          <span>{dataset.download_count || 500}+</span>
+          <span>{dataset.download_count ? `${dataset.download_count}+` : 0}</span>
         </div>
 
         <div className="flex items-center relative group">
@@ -79,7 +86,6 @@ export default function DatasetCard({ dataset }: DatasetCardProps) {
             {geographyInfo.hasMore && <span className="text-gray-400 ml-1">+{geographyInfo.count}</span>}
           </span>
 
-
           {geographyInfo.hasMore && (
             <div className="absolute bottom-full left-0 mb-2 px-3 py-2 bg-gray-100 text-gray-700 text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-[99999] whitespace-normal break-words max-w-sm">
               {geographyInfo.tooltip}
@@ -88,7 +94,6 @@ export default function DatasetCard({ dataset }: DatasetCardProps) {
           )}
         </div>
       </div>
-
 
       <div className="border-t border-gray-200 mb-4"></div>
       <div className="mb-6">
@@ -116,8 +121,9 @@ export default function DatasetCard({ dataset }: DatasetCardProps) {
 
 
           <div className="flex items-center text-xs text-gray-500">
-            <span>published by</span>
-            <Building2 className="h-4 w-4 ml-2 text-gray-400" />
+            <span >published by :</span>
+            <img className="h-4 w-4 ml-2 rounded-full" src={dataset.organization.logo} />
+            {/* <Building2 className="h-4 w-4 ml-2 text-gray-400" /> */}
           </div>
         </div>
       </div>

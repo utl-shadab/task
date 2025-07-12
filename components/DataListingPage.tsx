@@ -40,6 +40,8 @@ export default function DataListingPage() {
     formats: {},
   })
 
+  // console.log("aggregations", aggregations);
+
   const debouncedSearchQuery = useDebounce(searchQuery, 500)
 
   const fetchData = useCallback(async () => {
@@ -66,7 +68,9 @@ export default function DataListingPage() {
         throw new Error(`HTTP error! status: ${response.status}`)
       }
 
-      const data: ApiResponse = await response.json()
+      const data: ApiResponse = await response.json();
+
+      // console.log("data", data);
 
       setDatasets(data.results || [])
       setTotalResults(data.total || 0)
@@ -167,7 +171,7 @@ export default function DataListingPage() {
               </div>
 
               <div className="flex items-center space-x-4 ">
-                
+
                 <div className="flex border border-gray-300 rounded-md overflow-hidden">
                   <Button
                     variant={viewMode === "grid" ? "default" : "ghost"}
@@ -186,8 +190,6 @@ export default function DataListingPage() {
                     <List className="h-4 w-4" />
                   </Button>
                 </div>
-
-                
                 <div className="relative">
                   <select
                     value={sortBy}
@@ -278,7 +280,7 @@ export default function DataListingPage() {
         <Filter className="h-6 w-6" />
       </motion.button>
 
-    
+
       <AnimatePresence>
         {showMobileFilters && (
           <>
