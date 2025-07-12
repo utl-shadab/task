@@ -154,7 +154,7 @@ civic-data-listing/
 ### Typography
 
 * **Font Family**: Poppins
-* **Weights**: 300, 400, 500, 600, 700
+* **Weights**: 300, 400, 500, 600, 700,800,900
 * **Sizes**: Responsive scale from `12px` to `24px`
 
 ### Spacing
