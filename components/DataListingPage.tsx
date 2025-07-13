@@ -132,17 +132,6 @@ export default function DataListingPage() {
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
-      {/* Breadcrumb */}
-      <div className="bg-orange-100 py-2 flex-shrink-0">
-        <div className="container mx-auto px-4">
-          <div className="flex items-center space-x-2 text-sm">
-            <span className="text-gray-600">Home</span>
-            <span className="text-gray-400">›</span>
-            <span className="text-gray-900 font-medium">All Data</span>
-          </div>
-        </div>
-      </div>
-
       <div className="container mx-auto px-4 py-6 flex-1 flex gap-6">
         {/* Desktop Filter Sidebar */}
         <div className="hidden md:block flex-shrink-0">
@@ -271,11 +260,11 @@ export default function DataListingPage() {
       <motion.button
         className="md:hidden fixed bottom-6 right-6 bg-blue-600 text-white p-4 rounded-full shadow-lg z-40"
         onClick={() => setShowMobileFilters(true)}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
         initial={{ opacity: 0, scale: 0 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.5, type: "spring", stiffness: 300 }}
+        transition={{ delay: 0.4, duration: 0.4, type: "spring", stiffness: 160 }}
       >
         <Filter className="h-6 w-6" />
       </motion.button>
@@ -286,45 +275,30 @@ export default function DataListingPage() {
           <>
             <motion.div
               initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
+              animate={{ opacity: 0.4 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="fixed inset-0 bg-black/50 z-50 md:hidden"
+              transition={{ duration: 0.4 }}
+              className="fixed inset-0 bg-black z-40 md:hidden"
               onClick={handleMobileFilterClose}
             />
             <motion.div
-              initial={{
-                opacity: 0,
-                scale: 0,
-                x: "100%",
-                y: "100%",
-                transformOrigin: "bottom right",
-              }}
-              animate={{
-                opacity: 1,
-                scale: 1,
-                x: 0,
-                y: 0,
-              }}
-              exit={{
-                opacity: 0,
-                scale: 0,
-                x: "100%",
-                y: "100%",
-              }}
+              key="mobile-filter"
+              initial={{ x: "100%", opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: "100%", opacity: 0 }}
               transition={{
+                duration: 0.5,
                 type: "spring",
-                damping: 30,
-                stiffness: 400,
-                duration: 0.4,
+                stiffness: 100,
+                damping: 20,
               }}
-              className="fixed inset-0 bg-white z-50 md:hidden overflow-y-auto hide-scrollbar"
+              className="fixed inset-0 z-50 bg-white md:hidden overflow-y-auto"
             >
               <div className="p-4">
                 <div className="flex items-center justify-between mb-6">
                   <h2 className="text-xl font-semibold">Filters</h2>
                   <Button variant="ghost" size="sm" onClick={handleMobileFilterClose}>
-                    <X className="h-5 w-5" />
+                    <X className="h-10 w-10 p-2 bg-blue-600 text-white rounded-full" />
                   </Button>
                 </div>
                 <FilterSidebar
@@ -332,7 +306,7 @@ export default function DataListingPage() {
                   aggregations={aggregations}
                   onFilterChange={handleFilterChange}
                   onReset={handleResetFilters}
-                  isMobile={true}
+                  isMobile
                   onMobileClose={handleMobileFilterClose}
                 />
               </div>

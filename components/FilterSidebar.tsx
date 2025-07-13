@@ -80,7 +80,7 @@ export default function FilterSidebar({
     if (isMobile && onMobileClose && newValues.length > currentValues.length) {
       setTimeout(() => {
         onMobileClose()
-      }, 300)
+      }, 200)
     }
   }
 
