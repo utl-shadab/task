@@ -161,14 +161,18 @@ export default function DatasetListItem({ dataset }: DatasetListItemProps) {
           </div>
         </div>
 
-        {/* Right-side Publisher Info */}
+        {/* Right-side */}
         <div className="flex md:flex-col items-center justify-between w-full md:w-48 text-xs text-gray-500 mt-4 md:mt-0">
           <div className="flex items-center">
             <span>Published by</span>
             <img
               className="h-4 w-4 ml-2 rounded-full"
-              src={dataset.organization.logo}
+              src={dataset.organization.logo || "/cdl_logo.png"}
               alt="Organization Logo"
+              onError={(e) => {
+                e.currentTarget.onerror = null;
+                e.currentTarget.src = "/cdl_logo.png";
+              }}
             />
           </div>
         </div>

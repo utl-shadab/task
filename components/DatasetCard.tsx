@@ -10,15 +10,6 @@ interface DatasetCardProps {
 
 export default function DatasetCard({ dataset }: DatasetCardProps) {
   const [showFullDescription, setShowFullDescription] = useState(false)
-
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString("en-GB", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-    })
-  }
-
   const getGeography = () => {
     const geoMetadata = dataset.metadata?.find((item) => item.metadata_item.label === "Geography")
     const geography = geoMetadata?.value || "Global"
@@ -43,10 +34,7 @@ export default function DatasetCard({ dataset }: DatasetCardProps) {
     }
   }
 
-  const getCreationDate = () => {
-    const dateMetadata = dataset.metadata?.find((item) => item.metadata_item.label === "Date of Creation of Dataset")
-    return dateMetadata?.value ? formatDate(dateMetadata.value) : formatDate(dataset.created)
-  }
+
 
   const createdDateFormatter = (rawDate: any) => {
     const date = new Date(rawDate);
@@ -121,9 +109,16 @@ export default function DatasetCard({ dataset }: DatasetCardProps) {
 
 
           <div className="flex items-center text-xs text-gray-500">
-            <span >published by :</span>
-            <img className="h-4 w-4 ml-2 rounded-full" src={dataset.organization.logo} />
-            {/* <Building2 className="h-4 w-4 ml-2 text-gray-400" /> */}
+            <span>published by :</span>
+            <img
+              className="h-4 w-4 ml-2 rounded-full"
+              src={dataset.organization.logo || "/images/default-org-logo.png"}
+              alt="Organization Logo"
+              onError={(e) => {
+                e.currentTarget.onerror = null;
+                e.currentTarget.src = "/cdl_logo.png";
+              }}
+            />
           </div>
         </div>
       </div>
